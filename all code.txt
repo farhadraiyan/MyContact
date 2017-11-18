@@ -1,0 +1,338 @@
+<?php
+include "htmlcode.php";
+$cw=getcwd();
+define("cwd",$cw);
+define("ds", DIRECTORY_SEPARATOR);
+function searchdata($s)
+{
+    if(file_exists(cwd.ds."allcont.txt"))
+    {
+        $alltext=file(cwd.ds."allcont.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);//converting the text file into array
+
+
+        echo "<table border='1px solid black'>";
+        print "<tr><th>Picture</th><th>First Name</th><th>Last Name</th><th>Delete</th> <th>Modify</th></tr>";
+
+        $multiarray=[];
+        for($i=0;$i<count($alltext);$i++)
+        {
+            $a=list($id,$t,$f,$l,$p)=explode(", ",$alltext[$i]);
+
+            if($s==$f||$s==$l)
+            {
+                echo "<tr>";
+                echo "<td><img src='allimage/$p'></td>";
+                echo "<td>$f</td>";
+
+                if($l=="")
+                {
+                    $l="not provided";
+
+                }
+                echo "<td>$l</td>";
+                echo "<td><a href='delete.php'>delete</a></td>";
+
+
+                echo "</tr>";
+            }
+
+
+            //$multiarray[$i]=$a;
+        }
+
+
+        //echo $value."<br/>";//print each contact as an array element
+
+
+        echo "<table/>";
+        //var_dump($a);
+        echo "<br/>";
+        //var_dump($multiarray);
+    }
+
+}
+searchdata($_POST['search']);
+?>
+
+
+
+<?php
+include "htmlcode.php";
+
+?>
+
+
+<form method="post" action="Contact.php" enctype="multipart/form-data">
+    <h2>Create your contact here</h2>
+    <label>Title</label><br/>
+    <input type="text" name="title"/><br/><br/>
+    <label>First Name</label><br/>
+    <input type="text" name="fname" placeholder="First Name" required/><br/><br/>
+    <label>Last Name</label><br/>
+    <input type="text" name="lname" placeholder="Last Name"/><br/><br/>
+    <label>upload image</label><br/>
+    <input type="file" name="image"/><br/><br/>
+
+
+<!--    <label>Email</label><br/>-->
+<!--    <input type="text" name="email" placeholder="Email"/><br/><br/>-->
+<!--    <label>Site</label><br/>-->
+<!--    <input type="text" name="site" placeholder="Site"/><br/><br/>-->
+<!--    <label>Cell Number</label><br/>-->
+<!--    <input type="text" name="cellnum" placeholder=" Cell Number"/><br/><br/>-->
+<!--    <label>Home Number</label><br/>-->
+<!--    <input type="text" name="homenum" placeholder="Home Number"/><br/><br/>-->
+<!--    <label>Office Number</label><br/>-->
+<!--    <input type="text" name="officenum" placeholder="Office Number"/><br/><br/>-->
+<!--    <label>Twitter url</label><br/>-->
+<!--    <input type="text" name="twitter" placeholder="Twitter url"/><br/><br/>-->
+<!--    <label>Fcebook Url</label><br/>-->
+<!--    <input type="text" name="facebook" placeholder="Facebook Url"/><br/><br/>-->
+<!--    <label>Picture</label><br/>-->
+<!--    <input type="text" name="pic" placeholder="pic"/><br/><br/>-->
+<!--    <label>comment</label><br/>-->
+<!--    <input type="text" name="comment" /><br/><br/>-->
+
+
+    <input type="submit" name="create">
+
+</form>
+
+
+
+<?php
+include "htmlcode.php";
+$cw=getcwd();
+define("cwd",$cw);
+define("ds", DIRECTORY_SEPARATOR);
+$img=$_FILES['image']['name'];//i am storing my image into my server location
+var_dump($img);
+$tem_nam=$_FILES['image']['tmp_name'];//storing my image into temporary location
+
+$imagelocation=cwd.ds."allimage/";
+move_uploaded_file($tem_nam,$imagelocation.$img);//moving the image from temp location  to my server
+
+
+function getdata($id,$t,$f,$l,$p/*,$e,$s,$c,$h,$o,$twt,$fb,$pic,$comm*/)//getting all data from user
+{
+
+    if(!file_exists(cwd.ds."allcont.txt"))
+    {
+
+        touch(cwd.ds."allcont.txt");
+        $handle=fopen(cwd.ds."allcont.txt","w");
+        if($handle)
+        {
+            fwrite($handle,$id.", ".$t.", ".$f.", ".$l.", ".$p."\r\n");
+//            fwrite($handle,$t." ".$f." ".$l." ".$e." ".$s." ".$c." ".
+//                $h." ".$o." ".$twt." ".$fb." ".$pic." ".$comm."\r\n");
+//
+
+
+        }
+    }
+    else if(file_exists(cwd.ds."allcont.txt"))
+    {
+        $handle=fopen(cwd.ds."allcont.txt","a+");
+        if($handle)
+        {
+            fwrite($handle,"\r\n".$id.", ".$t.", ".$f.", ".$l.", ".$p);
+
+//            fwrite($handle,"\r\n".$t." ".$f." ".$l." ".$e." ".$s." ".$c." ".
+//                $h." ".$o." ".$twt." ".$fb." ".$pic." ".$comm);
+
+
+        }
+    }
+}
+getdata(($_POST['fname'].rand(10,20)),$_POST['title'],$_POST['fname'],$_POST['lname'],$img/*$_POST['email'],$_POST['site'],$_POST['cellnum']
+    ,$_POST['homenum'],$_POST['officenum'],$_POST['twitter'],$_POST['facebook'],$_POST['pic'],$_POST['comment']*/);
+
+
+?>
+
+
+
+<?php
+include "htmlcode.php";
+$cw=getcwd();
+define("cwd",$cw);
+define("ds", DIRECTORY_SEPARATOR);
+
+function viewdata()
+{
+    if(file_exists(cwd.ds."allcont.txt"))
+    {
+        $alltext=file(cwd.ds."allcont.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);//skipping new line //converting the text file into array
+        echo "<table>";
+        printf("%1\$s %3\$s Picture %4\$s
+        %3\$s  First Name%4\$s
+        %3\$s Last Name  %4\$s
+        %3\$s Delete %4\$s
+        %3\$s Modify %4\$s
+        %2\$s","<tr>","</tr>","<th class='th'>","</th>");
+         for($i=0;$i<count($alltext);$i++)
+            {
+                @$a=list($id,$t,$f,$l,$p)=explode(", ",$alltext[$i]);
+
+                echo "<tr>";
+                echo "<td><img src='allimage/$p'></td>";
+                echo "<td>$f</td>";
+                if($l=="")
+                {
+                    $l="not provided";
+
+                }
+                echo "<td>$l</td>";
+
+                echo "<td><a href='delete.php'>delete</a></td>";
+
+                echo "</tr>";
+                //$multiarray[$i]=$a;
+            }
+
+
+            //echo $value."<br/>";//print each contact as an array element
+
+
+        echo "</table>";
+        //var_dump($a);
+        echo "<br/>";
+        //var_dump($multiarray);
+    }
+
+}
+viewdata();
+
+?>
+
+
+
+
+<?php
+include "css.php";
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Contact</title>
+</head>
+<body >
+<div id="div1">
+    <a href="htmlcode.php">Home</a>
+    <a href="create.php">create new contact</a>
+    <a href="edit.php">Edit</a>
+    <a href="delete.php">Delete contact</a>
+    <a href="view.php">view contact</a>
+
+</div>
+<div id="div2" >
+    <form action="search.php" method="post">
+        <input type="text" name="search" placeholder="search here"/>
+        <input type="submit" value="search"/>
+    </form>
+</div>
+
+</body>
+</html>
+
+<style>
+
+    body
+{
+    background-color: lightblue;
+
+}
+
+    h1{
+        text-align: center;
+        color:steelblue;
+    }
+    #div1{
+        text-align: center;
+        padding-right: 150px;
+        font-size: 30pt;
+
+    }
+    #div2{
+        text-align: right;
+        font-size: 10pt;
+        padding: 20pt;
+        height: 10px;
+    }
+    a{
+        padding: 10pt;
+        text-decoration: none;
+    }
+    label,input{
+        text-align: left;
+
+    }
+    table{
+        border-collapse: collapse;
+        color: green;
+
+    }
+    .th{
+        color: darkgreen;
+    }
+    img{
+        height: 40px;
+        width: 60px;
+    }
+
+
+
+
+</style>
+
+
+
+<?php
+include "htmlcode.php";
+$cw=getcwd();
+define("cwd",$cw);
+define("ds", DIRECTORY_SEPARATOR);
+$multiarray=[];
+if(file_exists(cwd.ds."allcont.txt")) {
+    $alltext = file(cwd . ds . "allcont.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);//skipping new line //converting the text file into array
+    echo "text file array print done" . "<br/>";
+    echo "<hr/>";
+
+    for ($i = 0; $i < count($alltext); $i++) {
+        @$a = list($id, $t, $f, $l, $p) = explode(" ", $alltext[$i]);
+        $multiarray[$i] = $a;
+    }
+
+    var_dump($multiarray);
+}
+$delid=$multiarray[4][0];
+$DELETE="";
+for($i=0;$i<count($multiarray);$i++)
+{
+        if($multiarray[$i][0]==$delid)
+        {
+            $DELETE = implode(" ",$multiarray[$i]);
+        }
+}
+$data = file(cwd.ds."allcont.txt");
+$out = [];
+foreach($data as $line) {
+    if(trim($line) != $DELETE) {
+        $out[] = $line;
+    }
+}
+//var_dump($out);
+$fp = fopen(cwd.ds."allcont.txt", "w+");
+flock($fp, LOCK_EX);
+foreach($out as $line) {
+    fwrite($fp, $line);
+}
+flock($fp, LOCK_UN);
+fclose($fp);
+?>

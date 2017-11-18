@@ -1,0 +1,508 @@
+<?php
+include "htmlcode.php";
+
+?>
+
+
+<form method="post" action="Contact.php" enctype="multipart/form-data">
+    <h2>Create your contact here</h2>
+    <label><b>Title</b></label><br/>
+    <input type="text" name="title" required/><br/><br/>
+    <label><b>First Name</b></label><br/>
+    <input type="text" name="fname" placeholder="First Name" required/><br/><br/>
+    <label><b>Last Name</b></label><br/>
+    <input type="text" name="lname" placeholder="Last Name" required/><br/><br/>
+<!--    <button style="width:120px; height:30px; text-align: center;" onclick="document.getElementById('getFile').click()"><b>Upload Image</b></button>-->
+<!---->
+<!--    <input type="file" id="getFile" name="image" accept="image/*" style="display:none"/><br/><br/>-->
+
+
+    <label>Email</label><br/>
+    <input type="text" name="email" placeholder="Email"/><br/><br/>
+    <label>Site</label><br/>
+    <input type="text" name="site" placeholder="Site"/><br/><br/>
+    <label>Cell Number</label><br/>
+    <input type="text" name="cellnum" placeholder=" Cell Number"/><br/><br/>
+    <label>Home Number</label><br/>
+    <input type="text" name="homenum" placeholder="Home Number"/><br/><br/>
+    <label>Office Number</label><br/>
+    <input type="text" name="officenum" placeholder="Office Number"/><br/><br/>
+    <label>Twitter url</label><br/>
+    <input type="text" name="twitter" placeholder="Twitter url"/><br/><br/>
+    <label>Fcebook Url</label><br/>
+    <input type="text" name="facebook" placeholder="Facebook Url"/><br/><br/>
+    <label>comment</label><br/>
+    <textarea name="comment" cols="25" rows="5"></textarea><br/><br/>
+    <label><b>Upload Your Image (JPG, PNG)</b></label><br/><br/>
+    <label id="piclbl" for="picture" class="btn">Upload</label><br/>
+    <input type="file" name="image" id="picture" style="visibility:hidden;" ><br/>
+    <input class="create" type="submit" name="create" value="Create Contact">
+
+</form>
+
+
+<style>
+
+    body
+{
+    background-color: aliceblue;
+
+}
+    form{
+        text-align: center;
+    }
+    #piclbl
+    {
+        background-color: cornflowerblue;
+        border: 1px solid grey;
+        text-align: center;
+        padding: 3px;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+    .create
+    {
+        font-size: large;
+        color: white;
+        background-color: cadetblue;
+        border-radius: 5px;
+    }
+
+    h1{
+        text-align: center;
+        color:steelblue;
+    }
+    #div1{
+        text-align: center;
+        font-size: 20pt;
+        padding: 20px;
+        display:block;
+
+    }
+    #div1 a
+    {
+
+        margin-right: 70px;
+    }
+    #del
+    {
+        color: blue;
+        font-weight: bold;
+        background-color: aliceblue;
+    }
+    .src{
+
+        font-size: 12pt;
+        padding: 3pt;
+        size: 50px;
+        border-radius: 5px;
+    }
+    #s
+    {
+        background-color: mediumseagreen;
+        font-weight: bold;
+        color: white;
+        font-size: large;
+    }
+
+    a{
+        padding: 10pt;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    label,input{
+        text-align: left;
+
+    }
+    table{
+        border-collapse: collapse;
+        color: green;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    .th{
+        color: darkgreen;
+        padding: 5px;
+        border: 1px solid green;
+    }
+    td{
+        padding: 10px;
+        text-align: center;
+        border: 1px solid green;
+    }
+
+    img{
+        height: 40px;
+        width: 60px;
+    }
+
+</style>
+
+
+
+
+<?php
+include "htmlcode.php";
+$cw=getcwd();
+define("cwd",$cw);
+define("ds", DIRECTORY_SEPARATOR);
+if(file_exists(cwd.ds."ids"))
+{
+    $handle = fopen(cwd.ds."ids", "r");// $handle you hold the file open function
+    $id = fread($handle, filesize(cwd.ds."ids"));
+    fclose($handle);
+            echo "<table>";
+            printf("%1\$s %3\$s Picture %4\$s
+         %3\$s Title %4\$s
+        %3\$s  First Name%4\$s
+        %3\$s Last Name  %4\$s
+        %3\$s Email %4\$s
+        %3\$s Website %4\$s
+        %3\$s Cell Number %4\$s
+        %3\$s Home Number %4\$s
+        %3\$s Office Number %4\$s
+        %3\$s Twitter Url %4\$s
+        %3\$s Facebook Url %4\$s
+        %3\$s Comment %4\$s
+        %3\$s Edit %4\$s
+        %3\$s Delete %4\$s
+        %2\$s","<tr>","</tr>","<th class='th'>","</th>");
+    for($j=1;$j<=$id;$j++)
+    {
+        @$alltext=file(cwd.ds."$j.txt");
+        if(file_exists(cwd.ds."$j.txt"))//avoid printing empty file after deletion
+        {
+            for($i=0;$i<count($alltext);$i++)
+            {
+                @$a=list($file_id,$t,$f,$l,$e,$w,$cell,$h,$o,$twt,$fb,$c,$p)=explode(", ",$alltext[$i]);
+
+                echo "<tr>";
+                //this if else has logical error, need to fix this
+                if($e=="")
+                {
+                    $e="not provided";
+                }
+                elseif($w=="")
+                {
+                    $w="not provided";
+                }
+                elseif($c=="")
+                {
+                    $c="not provided";
+                }
+                elseif($h=="")
+                {
+                    $h="not provided";
+                }
+                elseif($o=="")
+                {
+                    $o="not provided";
+                }
+                elseif($twt=="")
+                {
+                    $twt="not provided";
+                }
+                elseif($fb=="")
+                {
+                    $fb="not provided";
+                }
+
+
+                echo "<td><img src='allimage/$p'></td>";
+                echo "<td>$t</td>";
+                echo "<td>$f</td>";
+                echo "<td>$l</td>";
+                echo "<td>$e</td>";
+                echo "<td>$w</td>";
+                echo "<td>$cell</td>";
+                echo "<td>$h</td>";
+                echo "<td>$o</td>";
+                echo "<td>$twt</td>";
+                echo "<td>$fb</td>";
+                echo "<td>$c</td>";
+                echo "<td><a href='edit.php?get=$alltext[$i]'>Edit</a></td>";//create a unique link with unique id by get method
+                echo "<td><input type='button'  id='del' onclick='delt($file_id)' name='Delete' value='Delete'></td>";
+                //echo "<td><a href='delete.php?get=$alltext[$i]'>delete</a></td>";
+                echo "</tr>";
+                //$multiarray[$i]=$a;
+            }
+        }
+    }
+    echo "</table>";
+    echo "<br/>";
+
+}
+
+?>
+<script>
+    function delt(delid)//onclick calling this function if confirm return true it willgo
+    // the delete.php file with specific id with  the url, so that i can delete that specific contact
+
+    {
+        if(confirm("do you want to delete?"))
+        {
+            window.location.href='http://localhost:802/finalassignment/delete.php?get='+delid;
+        }
+    }
+
+</script>
+
+
+
+
+<?php
+include "htmlcode.php";
+$cw=getcwd();
+define("cwd",$cw);
+define("ds", DIRECTORY_SEPARATOR);
+$str=$_GET['get'];
+if(file_exists(cwd.ds."$str.txt"))
+{
+    @unlink("$str.txt");
+}
+else{
+    echo "no";
+}
+//$ar=explode(", ",$str);
+//echo $str;
+
+?>
+
+
+
+<?php
+include "htmlcode.php";
+$cw=getcwd();
+define("cwd",$cw);
+define("ds", DIRECTORY_SEPARATOR);
+$alltext=$_GET['get'];
+$ar=explode(", ",$alltext);
+$picname=$ar[(count($ar)-1)];
+if(isset($_POST['edit']))
+{
+
+    @unlink("$ar[0].txt");
+    $img=$_FILES['image']['name'];//i am storing my image into my server location
+//var_dump($img);
+    $tem_nam=$_FILES['image']['tmp_name'];//storing my image into temporary location
+    $imagelocation=cwd.ds."allimage/";
+    move_uploaded_file($tem_nam,$imagelocation.$img);//moving the image from temp location  to my server
+    function getdata($id,$t,$f,$l,$e,$s,$c,$h,$o,$twt,$fb,$comm,$p)//getting all data from user
+    {
+        //touch(cwd.ds."allcont.txt");
+        $myFile = cwd.ds."$id.txt";
+        $handle=fopen($myFile,"w");
+        //fwrite($handle,$id.", ".$t.", ".$f.", ".$l.", ".$p);
+        fwrite($handle,$id.", ".$t.", ".$f.", ".$l.", ".$e.", ".$s.", ".$c.", ".
+            $h.", ".$o.", ".$twt.", ".$fb.", ".$comm.", ".$p);
+        echo "<script>alert('edited');window.location.href='http://localhost:802/finalassignment/view.php?'</script>";
+        fclose($handle);
+    }
+    getdata($ar[0],$_POST['title'],$_POST['fname'],$_POST['lname'], $_POST['email'],$_POST['site'],$_POST['cellnum']
+        ,$_POST['homenum'],$_POST['officenum'],$_POST['twitter'],$_POST['facebook'],$_POST['comment'],$img);
+}
+
+?>
+
+<form method="post" enctype="multipart/form-data">
+    <h2>Create your contact here</h2>
+    <label><b>Title</b></label><br/>
+    <input type="text" name="title" value=<?php echo "$ar[1]"?> required /><br/><br/>
+    <label><b>First Name</b></label><br/>
+    <input type="text" name="fname" placeholder="First Name" value=<?php echo "$ar[2]"?> required /><br/><br/>
+    <label><b>Last Name</b></label><br/>
+    <input type="text" name="lname" placeholder="Last Name" value=<?php echo "$ar[3]"?> required /><br/><br/>
+    <!--    <button style="width:120px; height:30px; text-align: center;" onclick="document.getElementById('getFile').click()"><b>Upload Image</b></button>-->
+    <!--    <input type="file" id="getFile" name="image" accept="image/*" style="display:none"/><br/><br/>-->
+    <label>Email</label><br/>
+    <input type="text" name="email" placeholder="Email" value=<?php echo "$ar[4]"?> /><br/><br/>
+    <label>Site</label><br/>
+    <input type="text" name="site" placeholder="Site" value=<?php echo "$ar[5]"?> /><br/><br/>
+    <label>Cell Number</label><br/>
+    <input type="text" name="cellnum" placeholder=" Cell Number" value=<?php echo "$ar[6]"?> /><br/><br/>
+    <label>Home Number</label><br/>
+    <input type="text" name="homenum" placeholder="Home Number" value=<?php echo "$ar[7]"?> /><br/><br/>
+    <label>Office Number</label><br/>
+    <input type="text" name="officenum" placeholder="Office Number" value=<?php echo "$ar[8]"?> /><br/><br/>
+    <label>Twitter url</label><br/>
+    <input type="text" name="twitter" placeholder="Twitter url" value=<?php echo "$ar[9]"?> /><br/><br/>
+    <label>Fcebook Url</label><br/>
+    <input type="text" name="facebook" placeholder="Facebook Url" value=<?php echo "$ar[10]"?> /><br/><br/>
+    <label>comment</label><br/>
+    <textarea name="comment" cols="25" rows="5" ><?php echo "$ar[11]"?></textarea><br/><br/>
+    <label><b>Upload Your Image (JPG, PNG)</b></label><br/><br/>
+    <label id="piclbl" for="picture" class="btn">Upload</label><br/>
+    <input type="file" <?php echo "$ar[11]"?> name="image" id="picture" style="visibility:hidden;" ><br/>
+    <input class="create" type="submit" name="edit" value="edit">
+</form>
+
+
+<?php
+include "htmlcode.php";
+$cw=getcwd();
+define("cwd",$cw);
+define("ds", DIRECTORY_SEPARATOR);
+function getId()
+{
+    $file_name = cwd.ds."ids";
+    if (!file_exists($file_name))
+    {
+        touch($file_name);
+        $handle = fopen($file_name, "r+");
+
+    } else {
+        $handle = fopen($file_name, "r+");
+        $id = fread($handle, filesize($file_name));
+        settype($id, "integer");
+    }
+    rewind($handle);//set the file pointer at the begining of the file
+    fwrite($handle, ++$id);
+    fclose($handle);
+    return $id;
+}
+$i=getId();
+
+$img=$_FILES['image']['name'];//i am storing my image into my server location
+//var_dump($img);
+$tem_nam=$_FILES['image']['tmp_name'];//storing my image into temporary location
+
+$imagelocation=cwd.ds."allimage/";
+move_uploaded_file($tem_nam,$imagelocation.$img);//moving the image from temp location  to my server
+function getdata($id,$t,$f,$l,$e,$s,$c,$h,$o,$twt,$fb,$comm,$p)//getting all data from user
+{
+        //touch(cwd.ds."allcont.txt");
+        $myFile = cwd.ds."$id.txt";
+        $handle=fopen($myFile,"w");
+
+            //fwrite($handle,$id.", ".$t.", ".$f.", ".$l.", ".$p);
+         fwrite($handle,$id.", ".$t.", ".$f.", ".$l.", ".$e.", ".$s.", ".$c.", ".
+               $h.", ".$o.", ".$twt.", ".$fb.", ".$comm.", ".$p);
+        fclose($handle);
+}
+getdata($i,$_POST['title'],$_POST['fname'],$_POST['lname'], $_POST['email'],$_POST['site'],$_POST['cellnum']
+    ,$_POST['homenum'],$_POST['officenum'],$_POST['twitter'],$_POST['facebook'],$_POST['comment'],$img);
+
+
+?>
+
+
+<?php
+include "css.php";
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Contact</title>
+</head>
+<body >
+<div id="div1">
+    <a href="index.php">Create New Contact</a>
+    <a href="view.php">View all Contacts</a>
+
+</div>
+<div id="div2" >
+    <form action="search.php" method="post">
+        <input size="50" class="src" type="text" name="search" placeholder="Type First or Last Name"/>
+        <input id="s" class="src" type="submit" value="search"/>
+    </form>
+</div>
+
+</body>
+</html>
+
+<?php
+include "htmlcode.php";
+$cw=getcwd();
+define("cwd",$cw);
+define("ds", DIRECTORY_SEPARATOR);
+function searchdata($srch)
+{
+    $countsearch=0;
+    if(file_exists(cwd.ds."ids"))
+    {
+        $handle = fopen(cwd.ds."ids", "r");// $handle you hold the file open function
+        $id = fread($handle, filesize(cwd.ds."ids"));
+        fclose($handle);
+        $message="";
+
+        echo "<table>";
+        printf("%1\$s %3\$s Picture %4\$s
+         %3\$s Title %4\$s
+        %3\$s  First Name%4\$s
+        %3\$s Last Name  %4\$s
+        %3\$s Email %4\$s
+        %3\$s Website %4\$s
+        %3\$s Cell Number %4\$s
+        %3\$s Home Number %4\$s
+        %3\$s Office Number %4\$s
+        %3\$s Twitter Url %4\$s
+        %3\$s Facebook Url %4\$s
+        %3\$s Comment %4\$s
+        %3\$s Edit %4\$s
+        %3\$s Delete %4\$s
+        %2\$s","<tr>","</tr>","<th class='th'>","</th>");
+        for($j=1;$j<=$id;$j++)
+        {
+            @$alltext=file(cwd.ds."$j.txt");
+
+            if(file_exists(cwd.ds."$j.txt"))//avoid printing empty file after deletion
+            {
+
+                for($i=0;$i<count($alltext);$i++)
+                {
+                    @$a=list($file_id,$t,$f,$l,$e,$w,$cell,$h,$o,$twt,$fb,$c,$p)=explode(", ",$alltext[$i]);
+                    if($srch==$f||$srch==$l)
+                    {
+                        $countsearch++;
+                        echo "<tr>";
+                        if($p==""||$e==""||$w==""||$c==""||$h==""||$o==""||$twt==""||$fb=="")//this logic is wrong
+                        {
+                            $p=$e=$w=$c=$h=$o=$twt=$fb="not provided";
+                        }
+                        echo "<td><img src='allimage/$p'></td>";
+                        echo "<td>$t</td>";
+                        echo "<td>$f</td>";
+                        echo "<td>$l</td>";
+                        echo "<td>$e</td>";
+                        echo "<td>$w</td>";
+                        echo "<td>$cell</td>";
+                        echo "<td>$h</td>";
+                        echo "<td>$o</td>";
+                        echo "<td>$twt</td>";
+                        echo "<td>$fb</td>";
+                        echo "<td>$c</td>";
+                        echo "<td><a href='edit.php?get=$alltext[$i]'>Edit</a></td>";
+                        echo "<td><input type='button'  id='del' onclick='delt($file_id)' name='Delete' value='Delete'></td>";
+                        echo "</tr>";
+                    }
+
+
+                }
+
+            }
+        }
+        echo "</table>";
+        if($countsearch==0){//if search name not match show the user message
+            echo "No Contact Found";
+        }
+        echo "<br/>";
+    }
+}
+searchdata($_POST['search']);
+
+?>
+<script>
+    function delt(delid)
+    {
+        if(confirm("do you want to delete?"))
+        {
+            window.location.href='http://localhost:802/finalassignment/delete.php?get='+delid;
+        }
+    }
+
+</script>
