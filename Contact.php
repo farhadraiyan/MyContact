@@ -34,11 +34,9 @@ function getdata($id,$t,$f,$l,$e,$s,$c,$h,$o,$twt,$fb,$comm,$p)//getting all dat
         //touch(cwd.ds."allcont.txt");
         $myFile = cwd.ds."$id.txt";
         $handle=fopen($myFile,"w");
-
-            //fwrite($handle,$id.", ".$t.", ".$f.", ".$l.", ".$p);
          fwrite($handle,$id.", ".$t.", ".$f.", ".$l.", ".$e.", ".$s.", ".$c.", ".
                $h.", ".$o.", ".$twt.", ".$fb.", ".$comm.", ".$p);
-        fclose($handle);
+         fclose($handle);
 }
 getdata($i,$_POST['title'],$_POST['fname'],$_POST['lname'], $_POST['email'],$_POST['site'],$_POST['cellnum']
     ,$_POST['homenum'],$_POST['officenum'],$_POST['twitter'],$_POST['facebook'],$_POST['comment'],$img);

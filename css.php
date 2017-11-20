@@ -28,7 +28,7 @@
 
     h1{
         text-align: center;
-        color:steelblue;
+        color:red;
     }
     #div1{
         text-align: center;

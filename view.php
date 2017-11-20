@@ -1,4 +1,3 @@
-
 <?php
 include "htmlcode.php";
 $cw=getcwd();
@@ -35,37 +34,36 @@ if(file_exists(cwd.ds."ids"))
                 @$a=list($file_id,$t,$f,$l,$e,$w,$cell,$h,$o,$twt,$fb,$c,$p)=explode(", ",$alltext[$i]);
 
                 echo "<tr>";
-                //this if else has logical error, need to fix this
-//                if($e=="")
-//                {
-//                    $e="not provided";
-//                }
-//                elseif($w=="")
-//                {
-//                    $w="not provided";
-//                }
-//                elseif($c=="")
-//                {
-//                    $c="not provided";
-//                }
-//                elseif($h=="")
-//                {
-//                    $h="not provided";
-//                }
-//                elseif($o=="")
-//                {
-//                    $o="not provided";
-//                }
-//                elseif($twt=="")
-//                {
-//                    $twt="not provided";
-//                }
-//                elseif($fb=="")
-//                {
-//                    $fb="not provided";
-//                }
-
-
+               // this part is not necessary, before i tried to view all data in the page
+                //then a just come to know according to assignment i need to show first, last name, image
+                if($e=="")
+                {
+                    $e="not provided";
+                }
+                if($w=="")
+                {
+                    $w="not provided";
+                }
+                if($c=="")
+                {
+                    $c="not provided";
+                }
+                if($h=="")
+                {
+                    $h="not provided";
+                }
+                if($o=="")
+                {
+                    $o="not provided";
+                }
+                if($twt=="")
+                {
+                    $twt="not provided";
+                }
+                if($fb=="")
+                {
+                    $fb="not provided";
+                }
                 echo "<td><img src='allimage/$p'></td>";
 //                echo "<td>$t</td>";
                 echo "<td>$f</td>";
@@ -97,7 +95,7 @@ if(file_exists(cwd.ds."ids"))
     // the delete.php file with specific id with  the url, so that i can delete that specific contact
 
     {
-        if(confirm("do you want to delete?"))
+        if(confirm("do you want to delete?"))//if return true or if user press yes
         {
             window.location.href='http://localhost:802/finalassignment/delete.php?get='+delid;
         }

@@ -24,7 +24,7 @@ if(isset($_POST['edit']))//if edit button clicked
         //fwrite($handle,$id.", ".$t.", ".$f.", ".$l.", ".$p);
         fwrite($handle,$id.", ".$t.", ".$f.", ".$l.", ".$e.", ".$s.", ".$c.", ".
             $h.", ".$o.", ".$twt.", ".$fb.", ".$comm.", ".$p);
-        echo "<script>window.location.href='http://localhost:802/finalassignment/view.php?'</script>";
+        echo "<script>alert('Contact Edited');window.location.href='http://localhost:802/finalassignment/view.php?'</script>";
         fclose($handle);
     }
     getdata($ar[0],$_POST['title'],$_POST['fname'],$_POST['lname'], $_POST['email'],$_POST['site'],$_POST['cellnum']

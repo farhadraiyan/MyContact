@@ -5,6 +5,7 @@ define("cwd",$cw);
 define("ds", DIRECTORY_SEPARATOR);
 function searchdata($srch)
 {
+    $userinput="";
     $countsearch=0;
     if(file_exists(cwd.ds."ids"))
     {
@@ -60,6 +61,10 @@ function searchdata($srch)
                         echo "<td><input type='button'  id='del' onclick='delt($file_id)' name='Delete' value='Delete'></td>";
                         echo "</tr>";
                     }
+                    else
+                    {
+                        $userinput=$srch;
+                    }
 
 
                 }
@@ -68,7 +73,9 @@ function searchdata($srch)
         }
         echo "</table>";
         if($countsearch==0){//if search name not match show the user message
-            echo "<h1>No Contact Found</h1>";
+            echo "<h1>Enter a valid First name or Last name<br/>
+            \"$userinput\" doesn't exist as a first name or Last name in the contact list</h1>";
+
         }
         echo "<br/>";
     }
