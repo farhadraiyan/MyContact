@@ -19,7 +19,7 @@ include "css.php";
 </div>
 <div id="div2" >
     <form action="search.php" method="post">
-        <input size="50" class="src" type="text" name="search" placeholder="Type First or Last Name"/>
+        <input size="50" id="searchinput" class="src" type="text" name="search" placeholder="Type First or Last Name"/>
         <input id="s" class="src" type="submit" value="search"/>
     </form>
 </div>

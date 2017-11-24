@@ -1,10 +1,6 @@
 <style>
 
-    body
-{
-    background-color: aliceblue;
-
-}
+    body {  background-color: aliceblue;  }
     form/*to make all form element centre*/
     {
         text-align: center;
@@ -18,23 +14,40 @@
         font-weight: bold;
         border-radius: 5px;
     }
-    .create
+    .create /* create button style*/
     {
-        font-size: large;
+
         color: white;
         background-color: cadetblue;
-        border-radius: 5px;
+        float: left;
+        padding: 15px 15px 30px 15px;
+        text-align: center;
+        font-size: large;
+        display: inline-block;
+        margin-bottom: 60px;
+
     }
 
     h1{
         text-align: center;
         color:red;
     }
+    h2
+    {
+        float: left;
+        font-size: xx-large;
+
+    }
+    #requiredstar  /*style for required star*/
+    {
+        color: red;
+    }
     #div1{
         text-align: center;
         font-size: 20pt;
         padding: 20px;
         display:block;
+        margin-bottom: 50px;
 
     }
     #div1 a
@@ -48,30 +61,35 @@
         font-weight: bold;
         background-color: aliceblue;
     }
-    .src{
-
+    .src /*for both search button and input*/
+    {
         font-size: 12pt;
         padding: 3pt;
-        size: 50px;
         border-radius: 5px;
+
     }
-    #s
+    #s  /*for search button*/
     {
         background-color: mediumseagreen;
         font-weight: bold;
         color: white;
         font-size: large;
+        width: 100px;
+        height: 35px;
+
+    }  /*for search input box*/
+    #searchinput
+    {
+        height: 35px;
     }
+
 
     a{
         padding: 10pt;
         text-decoration: none;
         font-weight: bold;
     }
-    label,input{
-        text-align: left;
 
-    }
     table{
         border-collapse: collapse;
         color: green;
@@ -102,5 +120,36 @@
         margin-left: 12.5%;
 
     }
+    .contactpage
+    {
+        width: 60%;
+        margin-left: 20%;
+
+
+    }
+    .contactpage, label, input:not(.src) /*this part for style all input of except search box input*/
+    {
+        float: left;
+        margin-right: 10px;
+        border-radius: 5px;
+
+    }
+    .contactpage, label, input[type="text"], input:not(.src)
+    {
+        height: 28px;
+
+
+    }
+    .contactpage, label
+    {
+        font-weight: bold;
+
+
+    }
+    textarea {
+        float: left;
+
+    }
+
 
 </style>
