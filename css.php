@@ -47,7 +47,7 @@
         font-size: 20pt;
         padding: 20px;
         display:block;
-        margin-bottom: 50px;
+        margin-bottom: 35px;
 
     }
     #div1 a
@@ -124,14 +124,28 @@
     {
         width: 60%;
         margin-left: 20%;
+        display: block;
+        margin-top: 30px;
 
 
     }
+    .contactpage, .contactform
+    {
+
+        height: 1150px;
+        border-radius: 10px;
+        background-color: #8fff812f;
+    }
+
     .contactpage, label, input:not(.src) /*this part for style all input of except search box input*/
     {
         float: left;
-        margin-right: 10px;
+        margin-inside: 10px;
         border-radius: 5px;
+        /*text-align: center;*/
+        padding: 3px;
+        margin-right: 10px;
+
 
     }
     .contactpage, label, input[type="text"], input:not(.src)
@@ -148,6 +162,11 @@
     }
     textarea {
         float: left;
+
+    }
+    #allinput
+    {
+        margin-left: 15px;
 
     }
 

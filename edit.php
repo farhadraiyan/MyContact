@@ -36,7 +36,8 @@ if(isset($_POST['edit']))//if edit button clicked
 ?>
 
 <div class="contactpage">
-    <form method="post" enctype="multipart/form-data">
+    <form class="contactform" method="post" enctype="multipart/form-data">
+        <div id="allinput">
         <h2>Edit the Contact</h2><br/><br/><br/><br/><br/><br/>
         <label>Title</label><label id="requiredstar">*</label><br/><br/>
         <input type="text" name="title" value='<?php echo "$ar[1]"?>' size="40" required/><br/><br/>
@@ -65,9 +66,10 @@ if(isset($_POST['edit']))//if edit button clicked
 
         <label><b>Upload Your Image (JPG, PNG)</b></label><br/><br/>
         <label id="piclbl" for="picture" class="btn">Upload</label><br/>
-        <input type="file" <?php echo "$ar[11]"?> name="image" id="picture" style="visibility:hidden;" ><br/><br/><br/>
+        <input type="file" <?php echo "$ar[11]"?> name="image" id="picture" style="visibility:hidden;" ><br/><br/>
 
         <input class="create" type="submit" name="edit" value="Edit Contact"><br/><br/>
+        </div>
     </form>
 
 </div>
